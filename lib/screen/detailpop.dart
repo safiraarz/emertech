@@ -25,7 +25,9 @@ class _DetailPopState extends State<DetailPop> {
         appBar: AppBar(
           title: const Text('Detail of Popular Movie'),
         ),
-        body: ListView(children: <Widget>[tampilData()]));
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[tampilData()]),
+        ));
   }
 
   @override
@@ -58,8 +60,8 @@ class _DetailPopState extends State<DetailPop> {
 
   void delete(int id, String title) async {
     final response = await http.get(
-        Uri.parse("https://ubaya.fun/flutter/160419158/movies/deletemovie.php"),
-        );
+      Uri.parse("https://ubaya.fun/flutter/160419158/movies/deletemovie.php"),
+    );
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
@@ -100,18 +102,16 @@ class _DetailPopState extends State<DetailPop> {
                   shrinkWrap: true,
                   itemCount: _pm?.cast?.length,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new Text(_pm?.cast?[index]['person_name']
-                        );
+                    return new Text(_pm?.cast?[index]['person_name']);
                   })),
           Padding(padding: EdgeInsets.all(10), child: Text("Character name:")),
-                    Padding(
+          Padding(
               padding: EdgeInsets.all(10),
               child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: _pm?.cast?.length,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new Text(_pm?.cast?[index]['character_name']
-                        );
+                    return new Text(_pm?.cast?[index]['character_name']);
                   })),
           Padding(
               padding: EdgeInsets.all(10),
@@ -130,7 +130,7 @@ class _DetailPopState extends State<DetailPop> {
           ElevatedButton(
               onPressed: () {
                 print(_pm?.id.runtimeType);
-                delete(_pm!.id,_pm!.title);
+                delete(_pm!.id, _pm!.title);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => PopularMovie()));
               },
