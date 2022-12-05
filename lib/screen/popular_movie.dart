@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_safira_week2/class/cart.dart';
 import 'package:flutter_safira_week2/class/pop_movie.dart';
 import 'package:flutter_safira_week2/screen/detailpop.dart';
 import 'package:http/http.dart' as http;
@@ -95,24 +96,45 @@ class _PopularMovieState extends State<PopularMovie> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailPop(movieID: PMs2[index].id),
-                    ),
-                  );
-                },
-                leading: const Icon(Icons.movie, size: 30),
-                // title: Text(PMs2[index].title),
-                title: GestureDetector(
-                  child: Text(PMs2[index].title),
-                ),
-                subtitle: Text(PMs2[index].overview),
-              ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetailPop(movieID: PMs2[index].id),
+                      ),
+                    );
+                  },
+                  leading: const Icon(Icons.movie, size: 30),
+                  // title: Text(PMs2[index].title),
+                  title: GestureDetector(
+                    child: Text(PMs2[index].title),
+                  ),
+                  subtitle: Column(children: [
+                    Text(PMs2[index].overview),
+                    ElevatedButton(
+                        onPressed: () {
+                          addCart(PMs2[index].id, PMs2[index].title);
+                        },
+                        child: Text("Add to cart"))
+                  ])),
             ],
           ));
         });
+  }
+
+  final dbHelper = DatabaseHelper.instance;
+
+  void addCart(movie_id, title) async {
+    Map<String, dynamic> row = {
+      'movie_id': movie_id,
+      'title': title,
+      'jumlah': 1
+    };
+    await dbHelper.addCart(row);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Sukses manambah barang')));
   }
 
   @override

@@ -14,6 +14,7 @@ import 'package:flutter_safira_week2/screen/popular_movie.dart';
 import 'package:flutter_safira_week2/screen/quiz.dart';
 import 'package:flutter_safira_week2/screen/search.dart';
 import 'package:flutter_safira_week2/screen/studentlist.dart';
+import 'package:flutter_safira_week2/screen/viewcart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String active_user = "";
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
         'animation': (context) => Animasi(),
         'popular_mov': (context) => PopularMovie(),
         'popular_act': (context) => PopularActor(),
-        'new_pop_movie': (context) => NewPopMovie()
+        'new_pop_movie': (context) => NewPopMovie(),
+        'cart': (context) => ViewCart(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -318,6 +320,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onTap: () {
                 Navigator.pushNamed(context, "popular_mov");
+              }),
+          ListTile(
+              title: Text("Cart"),
+              leading: Icon(
+                Icons.shopping_cart,
+                size: 25,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, "cart");
               }),
           ListTile(
               title: Text("Logout"),

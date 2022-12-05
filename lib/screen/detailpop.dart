@@ -136,6 +136,7 @@ class _DetailPopState extends State<DetailPop> {
                     MaterialPageRoute(builder: (context) => PopularMovie()));
               },
               child: new Icon(Icons.delete))
-        ]));
+        ])
+        );
   }
 }
